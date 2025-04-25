@@ -1,3 +1,4 @@
+import 'package:cinespot/data/network/errors/login_error.dart';
 import 'package:cinespot/data/network/models/user.dart';
 import 'package:cinespot/data/providers/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 class AuthenticationManager extends ChangeNotifier {
   final AuthProvider authProvider;
   bool isAuthorized = false;
-  bool isLoading = false;
   User? account;
 
   AuthenticationManager({required this.authProvider});
@@ -16,20 +16,16 @@ class AuthenticationManager extends ChangeNotifier {
     return isAuthorized;
   }
 
-  Future<bool> login(
+  Future<void> login(
       {required String username, required String password}) async {
-    isLoading = true;
-
     try {
       account = await authProvider.login(username, password);
-      isAuthorized = !(account == null);
+      if (account == null) {
+        throw LoginError('There is no such account in databse');
+      }
     } catch (error) {
-      print(error.toString());
-    } finally {
-      isLoading = false;
+      rethrow;
     }
-
-    return isAuthorized;
   }
 
   bool logout() {

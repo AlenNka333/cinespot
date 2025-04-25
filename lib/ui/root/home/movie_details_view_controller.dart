@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cinespot/core/app_style.dart';
+import 'package:cinespot/utils/app_style.dart';
 import 'package:cinespot/data/network/models/company.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/ui/common/navigation/router.dart';
@@ -125,7 +125,9 @@ class MovieDetailsViewController extends StatelessWidget {
       children: [
         AutoSizeText(
           movie.title.toString(),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
           maxLines: 2,
           minFontSize: 25,
           maxFontSize: 30,

@@ -1,4 +1,4 @@
-import 'package:cinespot/core/app_style.dart';
+import 'package:cinespot/utils/app_style.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/ui/common/tab_bar/tab_bar_view_model.dart';
 import 'package:cinespot/ui/root/favourites/favourites_view_controller.dart';
@@ -6,7 +6,6 @@ import 'package:cinespot/ui/root/home/home_view_controller.dart';
 import 'package:cinespot/ui/root/profile/profile_view_controller.dart';
 import 'package:cinespot/ui/root/search/search_view_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CupertinoTabBarApp extends StatelessWidget {
@@ -69,10 +68,7 @@ class TabBarController extends StatelessWidget {
                   ));
         } else if (index == 3) {
           return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.profileViewModel,
-                    child: ProfileViewController(),
-                  ));
+              builder: (context) => ProfileViewController());
         } else {
           return CupertinoTabView(
             builder: (context) {

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/ui/common/navigation/router.dart';
 import 'package:cinespot/ui/root/home/home_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +31,18 @@ class MovieOfTheDayView extends StatelessWidget {
                   children: [
                     AutoSizeText(
                       movie.title,
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoColors.white),
                       textAlign: TextAlign.center,
                       minFontSize: 10,
                       maxFontSize: 18,
                     ),
                     AutoSizeText(
                       movie.overview,
-                      style: TextStyle(fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          color: CupertinoColors.white),
                       textAlign: TextAlign.center,
                       minFontSize: 8,
                       maxFontSize: 13,

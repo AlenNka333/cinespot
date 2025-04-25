@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cinespot/core/extensions/double_extension.dart';
+import 'package:cinespot/utils/extensions/double_extension.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/ui/root/home/home_view_model.dart';

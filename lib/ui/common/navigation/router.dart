@@ -1,10 +1,7 @@
-import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/ui/common/tab_bar/tab_bar_view.dart';
 import 'package:cinespot/ui/root/login/login_view_controller.dart';
-import 'package:cinespot/ui/root/login/login_view_model.dart';
 import 'package:cinespot/ui/root/splash/splash_view_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppRouter {
@@ -32,11 +29,7 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => const CupertinoTabBarApp());
       case loginPage:
         return CupertinoPageRoute(
-          builder: (_) => ChangeNotifierProvider(
-            create: (context) =>
-                LoginViewModel(context.read<AuthenticationManager>()),
-            child: const LoginViewController(),
-          ),
+          builder: (_) => LoginViewController(),
         );
       default:
         throw FormatException("Route not found");
