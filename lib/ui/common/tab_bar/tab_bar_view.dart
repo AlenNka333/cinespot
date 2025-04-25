@@ -55,11 +55,7 @@ class TabBarController extends StatelessWidget {
                     child: HomeViewController(),
                   ));
         } else if (index == 1) {
-          return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.searchViewModel,
-                    child: SearchViewController(),
-                  ));
+          return CupertinoTabView(builder: (context) => SearchViewController());
         } else if (index == 2) {
           return CupertinoTabView(
               builder: (context) => ChangeNotifierProvider.value(

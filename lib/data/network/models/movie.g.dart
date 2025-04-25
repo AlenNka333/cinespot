@@ -10,7 +10,7 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       (json['id'] as num).toInt(),
       json['title'] as String,
       json['overview'] as String,
-      (json['vote_average'] as num).toDouble(),
+      (json['vote_average'] as num?)?.toDouble(),
       Movie._fromJsonUrl(json['poster_path'] as String?),
       Movie._fromJsonUrl(json['backdrop_path'] as String?),
       json['adult'] as bool?,

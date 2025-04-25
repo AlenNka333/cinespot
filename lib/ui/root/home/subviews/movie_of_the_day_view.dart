@@ -50,7 +50,7 @@ class MovieOfTheDayView extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: StarRating(
-                        rating: movie.voteAverage,
+                        rating: movie.voteAverage ?? 0,
                         allowHalfRating: true,
                         color: Colors.amber,
                         borderColor: Color.fromRGBO(87, 111, 130, 1),

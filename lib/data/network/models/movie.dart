@@ -16,7 +16,7 @@ class Movie {
   @JsonKey()
   final String overview;
   @JsonKey(name: "vote_average")
-  final double voteAverage;
+  final double? voteAverage;
   @JsonKey(name: "poster_path", fromJson: _fromJsonUrl)
   final String posterUrl;
   @JsonKey(name: "backdrop_path", fromJson: _fromJsonUrl)

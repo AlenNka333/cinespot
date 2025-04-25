@@ -80,7 +80,6 @@ class _LoginFormState extends State<LoginForm> {
                           bloc.add(LoginButtonPressed(
                               username: _usernameController.text,
                               password: _passwordController.text));
-                          //viewModel.login();
                         },
                         style: TextButton.styleFrom(
                           shape: RoundedRectangleBorder(
