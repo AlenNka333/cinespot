@@ -1,3 +1,4 @@
+import 'package:cinespot/ui/root/favourites/bloc/favourites_bloc.dart';
 import 'package:cinespot/utils/app_style.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/ui/common/tab_bar/tab_bar_view_model.dart';
@@ -6,6 +7,7 @@ import 'package:cinespot/ui/root/home/home_view_controller.dart';
 import 'package:cinespot/ui/root/profile/profile_view_controller.dart';
 import 'package:cinespot/ui/root/search/search_view_controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class CupertinoTabBarApp extends StatelessWidget {
@@ -55,16 +57,20 @@ class TabBarController extends StatelessWidget {
                     child: HomeViewController(),
                   ));
         } else if (index == 1) {
-          return CupertinoTabView(builder: (context) => SearchViewController());
-        } else if (index == 2) {
           return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.favouritesViewModel,
-                    child: FavouritesViewController(),
-                  ));
+              builder: (context) => const SearchViewController());
+        } else if (index == 2) {
+          return CupertinoTabView(builder: (context) {
+            return BlocProvider(
+              create: (context) =>
+                  FavouritesBloc(context.read<AuthenticationManager>())
+                    ..add(LoadFavourites()),
+              child: const FavouritesViewController(),
+            );
+          });
         } else if (index == 3) {
           return CupertinoTabView(
-              builder: (context) => ProfileViewController());
+              builder: (context) => const ProfileViewController());
         } else {
           return CupertinoTabView(
             builder: (context) {
