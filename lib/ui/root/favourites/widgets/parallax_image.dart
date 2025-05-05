@@ -70,6 +70,7 @@ class ParallaxImage extends StatelessWidget {
               children: [
                 CinespotButtonView(
                     title: "Trailer",
+                    enabled: trailerUrl.isNotEmpty,
                     onTab: () {
                       if (trailerUrl.isNotEmpty) {
                         AppRouter.launchURL(trailerUrl);
@@ -77,6 +78,7 @@ class ParallaxImage extends StatelessWidget {
                     }),
                 CinespotButtonView(
                     title: "Recommend",
+                    enabled: trailerUrl.isNotEmpty,
                     onTab: () {
                       if (trailerUrl.isNotEmpty) {
                         Share.share(trailerUrl);

@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/ui/common/navigation/router.dart';
-import 'package:cinespot/ui/root/home/home_view_model.dart';
+import 'package:cinespot/ui/root/home/bloc/home_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:provider/provider.dart';
 
 class MovieOfTheDayView extends StatelessWidget {
   final Movie movie;
@@ -16,7 +16,6 @@ class MovieOfTheDayView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10.0,
       children: [
         FittedBox(
           child: Column(
@@ -27,7 +26,6 @@ class MovieOfTheDayView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 2.3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 8.0,
                   children: [
                     AutoSizeText(
                       movie.title,
@@ -38,6 +36,7 @@ class MovieOfTheDayView extends StatelessWidget {
                       minFontSize: 10,
                       maxFontSize: 18,
                     ),
+                    SizedBox(height: 8),
                     AutoSizeText(
                       movie.overview,
                       style: TextStyle(
@@ -47,6 +46,7 @@ class MovieOfTheDayView extends StatelessWidget {
                       minFontSize: 8,
                       maxFontSize: 13,
                     ),
+                    SizedBox(height: 8),
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: StarRating(
@@ -59,12 +59,12 @@ class MovieOfTheDayView extends StatelessWidget {
                   ],
                 ),
               ),
-              Consumer<HomeViewModel>(
-                builder: (_, viewModel, __) {
-                  if (viewModel.isTrailerAvailable) {
+              BlocSelector<HomeBloc, HomeState, String>(
+                selector: (state) => state.trailerUrl,
+                builder: (context, trailerUrl) {
+                  if (trailerUrl.isNotEmpty) {
                     return TextButton(
-                      onPressed: () =>
-                          AppRouter.launchURL(viewModel.currentMovieTrailerUrl),
+                      onPressed: () => AppRouter.launchURL(trailerUrl),
                       style: TextButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
@@ -72,7 +72,7 @@ class MovieOfTheDayView extends StatelessWidget {
                           backgroundColor: Color.fromRGBO(58, 75, 93, 1)),
                       child: Text(
                           style: TextStyle(fontWeight: FontWeight.normal),
-                          "Whatch trailer".toUpperCase()),
+                          "Watch trailer".toUpperCase()),
                     );
                   } else {
                     return SizedBox(
@@ -84,6 +84,7 @@ class MovieOfTheDayView extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(width: 10),
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30.0),
