@@ -6,7 +6,6 @@ import 'package:cinespot/ui/root/home/home_view_controller.dart';
 import 'package:cinespot/ui/root/profile/profile_view_controller.dart';
 import 'package:cinespot/ui/root/search/search_view_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CupertinoTabBarApp extends StatelessWidget {
