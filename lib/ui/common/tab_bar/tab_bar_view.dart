@@ -1,4 +1,6 @@
-import 'package:cinespot/core/app_style.dart';
+import 'package:cinespot/ui/root/favourites/bloc/favourites_bloc.dart';
+import 'package:cinespot/ui/root/home/bloc/home_bloc.dart';
+import 'package:cinespot/utils/app_style.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/ui/common/tab_bar/tab_bar_view_model.dart';
 import 'package:cinespot/ui/root/favourites/favourites_view_controller.dart';
@@ -6,7 +8,7 @@ import 'package:cinespot/ui/root/home/home_view_controller.dart';
 import 'package:cinespot/ui/root/profile/profile_view_controller.dart';
 import 'package:cinespot/ui/root/search/search_view_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class CupertinoTabBarApp extends StatelessWidget {
@@ -15,8 +17,7 @@ class CupertinoTabBarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) =>
-          TabBarViewModel(context.read<AuthenticationManager>()),
+      create: (context) => TabBarViewModel(),
       child: CupertinoApp(
         theme: AppStyle.appTheme,
         home: TabBarController(),
@@ -50,29 +51,27 @@ class TabBarController extends StatelessWidget {
       ),
       tabBuilder: (context, index) {
         if (index == 0) {
-          return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.homeViewModel,
-                    child: HomeViewController(),
-                  ));
+          return CupertinoTabView(builder: (context) {
+            return BlocProvider(
+              create: (context) => HomeBloc()..add(LoadInitialData()),
+              child: HomeViewController(),
+            );
+          });
         } else if (index == 1) {
           return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.searchViewModel,
-                    child: SearchViewController(),
-                  ));
+              builder: (context) => const SearchViewController());
         } else if (index == 2) {
-          return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.favouritesViewModel,
-                    child: FavouritesViewController(),
-                  ));
+          return CupertinoTabView(builder: (context) {
+            return BlocProvider(
+              create: (context) =>
+                  FavouritesBloc(context.read<AuthenticationManager>())
+                    ..add(LoadFavourites()),
+              child: const FavouritesViewController(),
+            );
+          });
         } else if (index == 3) {
           return CupertinoTabView(
-              builder: (context) => ChangeNotifierProvider.value(
-                    value: viewModel.profileViewModel,
-                    child: ProfileViewController(),
-                  ));
+              builder: (context) => const ProfileViewController());
         } else {
           return CupertinoTabView(
             builder: (context) {

@@ -1,5 +1,5 @@
-import 'package:cinespot/core/constants.dart';
-import 'package:cinespot/core/extensions/list_extension.dart';
+import 'package:cinespot/utils/constants.dart';
+import 'package:cinespot/utils/extensions/list_extension.dart';
 import 'package:cinespot/data/network/models/company.dart';
 import 'package:cinespot/data/network/models/genre.dart';
 import 'package:cinespot/data/network/models/language.dart';
@@ -16,7 +16,7 @@ class Movie {
   @JsonKey()
   final String overview;
   @JsonKey(name: "vote_average")
-  final double voteAverage;
+  final double? voteAverage;
   @JsonKey(name: "poster_path", fromJson: _fromJsonUrl)
   final String posterUrl;
   @JsonKey(name: "backdrop_path", fromJson: _fromJsonUrl)

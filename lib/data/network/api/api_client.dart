@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:cinespot/core/constants.dart';
+import 'package:cinespot/utils/constants.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/data/network/models/user.dart';
 import 'package:cinespot/data/network/models/video.dart';

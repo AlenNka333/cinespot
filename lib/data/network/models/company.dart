@@ -1,4 +1,4 @@
-import 'package:cinespot/core/constants.dart';
+import 'package:cinespot/utils/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'company.g.dart';

@@ -1,42 +1,72 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cinespot/core/extensions/double_extension.dart';
+import 'package:cinespot/ui/root/home/bloc/home_bloc.dart';
+import 'package:cinespot/ui/root/home/movie_details/bloc/movie_details_bloc.dart';
+import 'package:cinespot/utils/extensions/double_extension.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/data/network/models/movie.dart';
-import 'package:cinespot/ui/root/home/home_view_model.dart';
-import 'package:cinespot/ui/root/home/movie_details_view_controller.dart';
-import 'package:cinespot/ui/root/home/movie_details_view_model.dart';
+import 'package:cinespot/ui/root/home/movie_details/movie_details_view_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 
-class MoviesListView extends StatelessWidget {
+class MoviesListView extends StatefulWidget {
   const MoviesListView({super.key});
 
   @override
+  State<MoviesListView> createState() => _MoviesListViewState();
+}
+
+class _MoviesListViewState extends State<MoviesListView> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onScroll);
+    super.initState();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      context.read<HomeBloc>().add(LoadMoreMovies());
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<HomeViewModel>(
-      builder: (_, viewModel, __) {
+    return BlocSelector<HomeBloc, HomeState, List<Movie>>(
+      selector: (state) => state.movies,
+      builder: (context, movies) {
+        final hasNextPage =
+            context.select((HomeBloc bloc) => bloc.state.hasNextPage);
+
         return ListView.separated(
           separatorBuilder: (_, __) => SizedBox(width: 10),
-          controller: viewModel.scrollController,
+          controller: _scrollController,
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.only(bottom: 5.0, left: 10),
-          itemCount: viewModel.movies.length + 1,
+          itemCount: hasNextPage ? movies.length + 1 : movies.length,
           itemBuilder: (_, index) {
-            if (index == viewModel.movies.length) {
+            if (index == movies.length) {
               return CupertinoActivityIndicator();
             } else {
-              final movie = viewModel.movies[index];
+              final movie = movies[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => ChangeNotifierProvider(
-                        create: (_) => MovieDetailsViewModel(
-                            context.read<AuthenticationManager>(),
-                            selectedMovie: movie),
+                      builder: (context) => BlocProvider(
+                        create: (_) => MovieDetailsBloc(
+                            context.read<AuthenticationManager>(), movie)
+                          ..add(LoadInitialMovieData()),
                         child: const MovieDetailsViewController(),
                       ),
                     ),

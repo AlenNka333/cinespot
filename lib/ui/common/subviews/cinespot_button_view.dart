@@ -3,23 +3,33 @@ import 'package:flutter/cupertino.dart';
 class CinespotButtonView extends StatelessWidget {
   final VoidCallback onTab;
   final String title;
+  final bool enabled;
 
   const CinespotButtonView(
-      {super.key, required this.onTab, required this.title});
+      {super.key,
+      required this.onTab,
+      required this.enabled,
+      required this.title});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTab,
+      onTap: enabled ? onTab : null,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
-          border: Border.all(color: CupertinoColors.systemYellow),
+          border: Border.all(
+              color: enabled
+                  ? CupertinoColors.systemYellow
+                  : CupertinoColors.inactiveGray),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           title,
-          style: const TextStyle(
-              color: CupertinoColors.systemYellow, fontSize: 14),
+          style: TextStyle(
+              color: enabled
+                  ? CupertinoColors.systemYellow
+                  : CupertinoColors.inactiveGray,
+              fontSize: 14),
         ),
       ),
     );

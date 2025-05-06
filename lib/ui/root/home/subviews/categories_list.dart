@@ -1,7 +1,7 @@
 import 'package:cinespot/data/network/models/movie.dart';
-import 'package:cinespot/ui/root/home/home_view_model.dart';
+import 'package:cinespot/ui/root/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesList extends StatelessWidget {
   const CategoriesList({super.key});
@@ -10,22 +10,23 @@ class CategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: MovieCategory.values.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Consumer<HomeViewModel>(
-              builder: (_, viewModel, __) {
-                return CategoriesListItemButtonView(
-                  isSelected: index == viewModel.currentCategory.index,
-                  content: viewModel.categories[index].title,
-                  onPressed: () => viewModel.selectCategory(index: index),
-                );
-              },
-            ),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) =>
+            previous.currentCategory != current.currentCategory,
+        builder: (context, state) {
+          return ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: MovieCategory.values.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CategoriesListItemButtonView(
+                      isSelected: index == state.currentCategory.index,
+                      content: state.categories[index].title,
+                      onPressed: () =>
+                          context.read<HomeBloc>().add(SelectCategory(index))));
+            },
           );
         },
       ),
