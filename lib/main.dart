@@ -4,8 +4,9 @@ import 'package:cinespot/data/providers/auth_provider.dart';
 import 'package:cinespot/data/sources/secure_storage_service.dart';
 import 'package:cinespot/data/sources/shared_prefs_service.dart';
 import 'package:cinespot/ui/common/navigation/router.dart';
-import 'package:cinespot/ui/root/splash/splash_view_model.dart';
+import 'package:cinespot/ui/root/splash/cubit/splash_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,10 +26,10 @@ void main() {
         Provider<AuthProvider>(create: (_) => authProvider),
         ChangeNotifierProvider<AuthenticationManager>(
             create: (_) => authManager),
-        ChangeNotifierProvider<SplashViewModel>(
-          create: (context) => SplashViewModel(
+        BlocProvider<SplashCubit>(
+          create: (context) => SplashCubit(
             context.read<AuthenticationManager>(),
-          ),
+          )..checkAuthorization(),
         ),
       ],
       child: CupertinoApp(

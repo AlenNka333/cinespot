@@ -108,10 +108,10 @@ extension MovieCategoryExtension on MovieCategory {
 
 extension CustomOutput on Movie {
   String movieReleaseDescription() {
-    return "${this.genres?.joinByName() ?? ""}•${this.releaseDate ?? ""}${this.adult ?? true ? "•18+" : ""}";
+    return "${genres?.joinByName() ?? ""}•${releaseDate ?? ""}${adult ?? true ? "•18+" : ""}";
   }
 
   String moviePopularityDescription() {
-    return "🌐${this.languages.joinByIndex()}  ★ ${this.voteAverage}";
+    return "🌐${languages.joinByIndex()}  ★ ${voteAverage}";
   }
 }
