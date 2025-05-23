@@ -1,4 +1,3 @@
-import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:flutter/material.dart';
 
 class TabBarViewModel extends ChangeNotifier {

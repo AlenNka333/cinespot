@@ -2,6 +2,7 @@ import 'package:cinespot/data/managers/authentication_manager.dart';
 import 'package:cinespot/data/managers/content_manager.dart';
 import 'package:cinespot/data/network/api/api_client.dart';
 import 'package:cinespot/data/network/models/movie.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -44,6 +45,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
       ContentManager().favouriteMovies = movies;
       emit(FavouritesLoaded(movies));
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(FetchingFavouritesFailed(error.toString()));
     }
   }

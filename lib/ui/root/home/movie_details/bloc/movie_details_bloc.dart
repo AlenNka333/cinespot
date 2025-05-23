@@ -3,6 +3,7 @@ import 'package:cinespot/data/managers/content_manager.dart';
 import 'package:cinespot/data/network/api/api_client.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/data/network/models/video.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,6 +51,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       add(FetchTrailerForMovie(state.selectedMovie.id.toString()));
       add(FetchFavouriteMovies());
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }
@@ -71,6 +73,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         emit(state.copyWith(isLoading: false));
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }
@@ -90,6 +93,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         ContentManager().addToFavourites(state.selectedMovie);
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith());
     }
   }
@@ -109,6 +113,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         ContentManager().removeFromFavourites(state.selectedMovie.id);
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith());
     }
   }
@@ -127,6 +132,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
 
       emit(state.copyWith(isLoading: false));
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }

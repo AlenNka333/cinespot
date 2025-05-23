@@ -1,3 +1,4 @@
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cinespot/data/managers/authentication_manager.dart';
@@ -38,6 +39,7 @@ class FavouriteMovieCellBloc
         emit(FavouriteMovieCellLoaded(trailerUrl: ""));
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(FavouriteMovieCellError(error.toString()));
     }
   }
@@ -54,6 +56,7 @@ class FavouriteMovieCellBloc
         ContentManager().removeFromFavourites(movieId);
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(FavouriteMovieCellError(error.toString()));
     }
   }

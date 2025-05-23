@@ -1,4 +1,5 @@
 import 'package:cinespot/data/managers/authentication_manager.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
       emit(LoginSuccess());
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(LoginFailed(error.toString()));
     }
   }

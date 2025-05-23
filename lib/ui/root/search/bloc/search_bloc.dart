@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cinespot/data/network/api/api_client.dart';
 import 'package:cinespot/data/network/models/movie.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -43,6 +44,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
       emit(SearchLoaded(movies: movies));
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(SearchFailed(error.toString()));
     }
   }

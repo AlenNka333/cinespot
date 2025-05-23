@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cinespot/data/network/api/api_client.dart';
 import 'package:cinespot/data/network/models/movie.dart';
 import 'package:cinespot/data/network/models/video.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +43,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         add(FetchTrailerForMovie(randomMovie.id.toString()));
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }
@@ -64,6 +66,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         hasNextPage: hasNextPage,
       ));
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }
@@ -92,6 +95,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         hasNextPage: hasNextPage,
       ));
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoading: false));
     }
   }
@@ -111,6 +115,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(state.copyWith(isLoadingTrailer: false));
       }
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(state.copyWith(isLoadingTrailer: false));
     }
   }

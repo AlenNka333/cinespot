@@ -1,3 +1,4 @@
+import 'package:cinespot/ui/common/subviews/error_banner.dart';
 import 'package:cinespot/ui/root/favourites/bloc/favourites_bloc.dart';
 import 'package:cinespot/ui/root/home/bloc/home_bloc.dart';
 import 'package:cinespot/utils/app_style.dart';
@@ -21,6 +22,14 @@ class CupertinoTabBarApp extends StatelessWidget {
       child: CupertinoApp(
         theme: AppStyle.appTheme,
         home: TabBarController(),
+        builder: (context, child) {
+          return Stack(
+            children: [
+              child!,
+              const ErrorBanner(),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cinespot/data/managers/authentication_manager.dart';
+import 'package:cinespot/data/services/global_error_handler_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       final bool isAuthorized = await _authManager.checkUserSession();
       isAuthorized ? emit(Authorized()) : emit(Unauthorized());
     } catch (error) {
+      GlobalErrorHandlerService().show(error.toString());
       emit(AuthorizationStatusFailed(error.toString()));
     }
   }
